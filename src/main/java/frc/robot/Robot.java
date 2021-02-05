@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
   int channelA = 2;
   int channelB = 3;
   boolean buttonA = false;
-  DoubleSolenoid doubleSolenoid = new DoubleSolenoid(channelA, channelB);
+  DoubleSolenoid doubleSolenoid = new DoubleSolenoid(17, channelA, channelB);
 
   @Override
   public void robotInit() {
