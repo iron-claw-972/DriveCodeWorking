@@ -7,6 +7,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Compressor;
+
 
 public class Robot extends TimedRobot {
 
@@ -28,6 +32,8 @@ public class Robot extends TimedRobot {
   boolean intakeB = false;
   CANSparkMax nmfMotor;
   CANSparkMax outtakeHelper;
+  
+
   @Override
   public void robotInit() {
     Controller = new Joystick(0); 
