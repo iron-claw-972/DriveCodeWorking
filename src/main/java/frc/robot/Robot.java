@@ -32,6 +32,14 @@ public class Robot extends TimedRobot {
   boolean intakeB = false;
   CANSparkMax nmfMotor;
   CANSparkMax outtakeHelper;
+
+  Compressor c = new Compressor(17);
+  int channelA = 2;
+  int channelB = 3;
+  boolean buttonA = false;
+  DoubleSolenoid doubleSolenoid = new DoubleSolenoid(17, channelA, channelB);
+  Solenoid motorCooling = new Solenoid(17,5);
+
   
 
   @Override
@@ -50,6 +58,7 @@ public class Robot extends TimedRobot {
 
     nmfMotor = new CANSparkMax(4, MotorType.kBrushless);
     outtakeHelper = new CANSparkMax(5, MotorType.kBrushless);
+    c.setClosedLoopControl(true);
 
     
   }
