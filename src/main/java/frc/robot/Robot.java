@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
   double rightJoyValue;
   boolean outtakeHelperA;
   boolean intakeB = false;
+  boolean intakeDown = false;
   CANSparkMax nmfMotor;
   CANSparkMax outtakeHelper;
 
@@ -45,11 +46,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Controller = new Joystick(0); 
-    TalonFXMotorLeft = new TalonFX(1);
-    TalonFXMotorRight = new TalonFX(14);
+    TalonFXMotorRight = new TalonFX(1);
+    TalonFXMotorLeft = new TalonFX(14);
 
-    TalonFXMotorLeftSlave = new TalonFX(18);
-    TalonFXMotorRightSlave = new TalonFX(15);
+    TalonFXMotorRightSlave = new TalonFX(18);
+    TalonFXMotorLeftSlave = new TalonFX(15);
 
     intake = new TalonSRX(8);
 
@@ -77,7 +78,7 @@ public class Robot extends TimedRobot {
     if (Controller.getRawButtonPressed(2)){
       intakeB = !intakeB;
     }
-    TalonFXMotorLeft.set(ControlMode.PercentOutput, motorPowerLeft); //moves according to left joystick
+    TalonFXMotorLeft.set(ControlMode.PercentOutput, -motorPowerLeft); //moves according to left joystick
     TalonFXMotorRight.set(ControlMode.PercentOutput, motorPowerRight); //moves according to right joystick
 
     TalonFXMotorLeftSlave.follow(TalonFXMotorLeft); //rest of the motors follow along
@@ -102,8 +103,26 @@ public class Robot extends TimedRobot {
     else{
       intake.set(ControlMode.PercentOutput,0);
     }
+
+
+    buttonA = Controller.getRawButton(3);
+    if (Controller.getRawButtonPressed(3)){
+      intakeDown = !intakeDown;
+    }
+
+    motorCooling.set(false);
+    if (intakeDown){
+      doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+      System.out.println("button");
+      //motorCooling.set(true);
+    }
+    else{
+      doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+      //motorCooling.set(true);
+    }
+  }
     
 
-  }
+  
 
 }
