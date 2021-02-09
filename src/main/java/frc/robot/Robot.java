@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
 
 public class Robot extends TimedRobot {
@@ -23,7 +24,7 @@ public class Robot extends TimedRobot {
   int channelB = 3;
   boolean buttonA = false;
   DoubleSolenoid doubleSolenoid = new DoubleSolenoid(17, channelA, channelB);
-
+  Solenoid motorCooling = new Solenoid(17,5);
   @Override
   public void robotInit() {
     Controller = new Joystick(0); 
@@ -38,12 +39,15 @@ public class Robot extends TimedRobot {
     //leftJoyValue = Controller.getRawAxis(1) * powerMultiplier;
     
     buttonA = Controller.getRawButton(1);
+    motorCooling.set(false);
     if (buttonA){
       doubleSolenoid.set(DoubleSolenoid.Value.kForward);
       System.out.println("button");
+      //motorCooling.set(true);
     }
     else{
       doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+      //motorCooling.set(true);
     }
   }
 
