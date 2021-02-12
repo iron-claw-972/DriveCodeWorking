@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
   boolean intakeDown = false;
   CANSparkMax nmfMotor;
   CANSparkMax outtakeHelper;
+  CANSparkMax climbMotor;
 
   Compressor c = new Compressor(17);
   int channelA = 2;
@@ -59,6 +60,7 @@ public class Robot extends TimedRobot {
 
     nmfMotor = new CANSparkMax(4, MotorType.kBrushless);
     outtakeHelper = new CANSparkMax(5, MotorType.kBrushless);
+    climbMotor = new CANSparkMax(6, MotorType.kBrushless);
     c.setClosedLoopControl(true);
 
     
@@ -77,13 +79,22 @@ public class Robot extends TimedRobot {
     outtakeHelperA = Controller.getRawButton(1);
     if (Controller.getRawButtonPressed(2)){
       intakeB = !intakeB;
+      System.out.println(intakeB);
     }
     TalonFXMotorLeft.set(ControlMode.PercentOutput, -motorPowerLeft); //moves according to left joystick
     TalonFXMotorRight.set(ControlMode.PercentOutput, motorPowerRight); //moves according to right joystick
 
     TalonFXMotorLeftSlave.follow(TalonFXMotorLeft); //rest of the motors follow along
     TalonFXMotorRightSlave.follow(TalonFXMotorRight); //follow method works for victors, talons, and the talonFX. SparkMaxs can follow other SparkMaxs
-    
+
+    if (Controller.getRawButton(4)) {
+      climbMotor.set(-.5);
+    } else if(Controller.getRawButton(5)) {
+      climbMotor.set(.5);
+    } else {
+      climbMotor.set(0);
+    }
+
     if (outtakeHelperA){
       nmfMotor.set(.2);
       outtakeHelper.set(.6);
